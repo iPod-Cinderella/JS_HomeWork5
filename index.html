@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Home Work 5</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="ch-wrap"></div>
+</body>
+</html>
+
+<script>
+var chessWrap = document.querySelector('.ch-wrap'); // создаем доску
+var index = 0;
+var text = ['','a','b','c','d','e','f','g','h',''];
+
+// доска 10 на 10 ячеек: 8 на клетки + 2 на края
+while (index < 100) {
+  // создаем ячейку
+  var cell = document.createElement('div');
+  chessWrap.appendChild(cell);
+  //если ячейка в первом или последнем ряду, то ей присваивается прозрачный стиль ячейки и значение из массива text
+  if (index - index % 10 == 0 || index - index % 10 == 90) {
+    cell.classList.add('ch-empty');
+    cell.innerHTML  = text[index % 10];
+  }
+  else {
+    //если ячеки крайние вертикальные, то им присваивася номера
+    if (index % 10 == 9 || index % 10 == 0) {
+      cell.classList.add('ch-empty');
+      cell.innerHTML  = (index - index % 10) / 10;
+    }
+    else {
+      // чередование ч-б: у черных сумма десятков и единиц не кратна 2
+      switch (((index - index % 10) / 10 + index % 10) % 2) {
+        case 0:
+          cell.classList.add('ch-white');
+          break;
+        case 1:
+          cell.classList.add('ch-black');
+          break;
+      }
+
+      // создание img в каждой ячейке (только ч-б)
+      var img = document.createElement('img');
+      cell.appendChild(img);
+      // названия картинок зависят от индекса
+      // выбиряем линии только первые и последние 2
+      switch (index - index % 10) {
+        case 10:
+          img.src = "img/figure-black" + index % 10 + ".png";
+          break;
+        case 20:
+          img.src = "img/figure-black.png";
+          break;
+        case 70:
+          img.src = "img/figure-white.png";
+          break;
+        case 80:
+          img.src = "img/figure-white" + index % 10 + ".png";
+          break;
+      }
+    }
+  }
+index++;
+}
+</script>
